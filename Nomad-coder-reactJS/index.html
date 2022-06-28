@@ -1,19 +1,65 @@
 <!DOCTYPE html>
 <html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+    <script type="text/babel">
+        function Btn({ text, fontSize = 12 }) {
+            // console.log(props);
+            // {text: 'Save Changes'}
+            console.log(text, 'was rendered');
+            return (
+                <button
+                    style={{
+                        backgroundColor: 'tomato',
+                        color: 'white',
+                        padding: '10px 20px',
+                        border: 0,
+                        borderRadius: 10,
+                        fontSize: fontSize,
+                    }}
+                >
+                    {text}
+                </button>
+            );
+        }
 
-<body>
-    <span>Total clicks: 0</span>
-    <button id="btn">Click me</button>
-</body>
-<script>
-    let counter = 0;
-    const button = document.getElementById("btn");
-    const span = document.querySelector("span");
-    function handleClick() {
-        counter = counter + 1;
-        span.innerText = `Total clicks: ${counter}`;
-    }
-    button.addEventListener("click", handleClick);
-</script>
+        // function ConfirmBtn() {
+        //     return (
+        //         <button
+        //             style={{
+        //                 backgroundColor: 'tomato',
+        //                 color: 'white',
+        //                 padding: '10px 20px',
+        //                 border: 0,
+        //                 borderRadius: 10,
+        //             }}
+        //         >
+        //             Confirm
+        //         </button>
+        //     );
+        // }
 
+        Btn.propTypes = {
+            text: PropTypes.string.isRequired,
+            fontSize: PropTypes.number,
+        };
+
+        function App() {
+            const [value, setValue] = React.useState('Save Changes');
+            const changeValue = () => setValue('Revert Changes');
+            return (
+                <div>
+                    <Btn text={'Save Changes'} fontSize={18} />
+                    <Btn text={'Continue'} />
+                </div>
+            );
+        }
+        const root = document.getElementById('root');
+        ReactDOM.render(<App />, root);
+    </script>
 </html>
