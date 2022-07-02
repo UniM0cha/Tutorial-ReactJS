@@ -9,10 +9,21 @@ import {
     Dimensions,
     ActivityIndicator,
 } from 'react-native';
+import { Fontisto } from '@expo/vector-icons';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const API_KEY = 'c293b9d4202002fc37c144ca1732b867';
+
+const icons = {
+    Clouds: 'cloudy',
+    Clear: 'day-sunny',
+    Atomosphere: 'cloudy-gusts',
+    Snow: 'snow',
+    Rain: 'rains',
+    Drizzle: 'rain',
+    Thunderstorm: 'lightning',
+};
 
 export default function App() {
     const [city, setCity] = useState('Loading...');
@@ -68,9 +79,23 @@ export default function App() {
                 ) : (
                     days.map((day, index) => (
                         <View key={index} style={styles.day}>
-                            <Text style={styles.temp}>
-                                {parseFloat(day.temp.day).toFixed(1)}
-                            </Text>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    width: '100%',
+                                }}
+                            >
+                                <Text style={styles.temp}>
+                                    {parseFloat(day.temp.day).toFixed(1)}
+                                </Text>
+                                <Fontisto
+                                    name={icons[day.weather[0].main]}
+                                    size={68}
+                                    color="white"
+                                />
+                            </View>
                             <Text style={styles.description}>
                                 {day.weather[0].main}
                             </Text>
@@ -111,7 +136,7 @@ const styles = StyleSheet.create({
 
     temp: {
         marginTop: 50,
-        fontSize: 178,
+        fontSize: 120,
         color: 'white',
     },
 
